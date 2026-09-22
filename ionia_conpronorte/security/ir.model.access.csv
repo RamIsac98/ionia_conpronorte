@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ionia_pozo,ionia.pozo.user,model_ionia_pozo,base.group_user,1,1,1,1
+access_ionia_gestion,ionia.gestion.user,model_ionia_gestion,base.group_user,1,1,1,1
+access_ionia_maint_repuesto,ionia.maint.repuesto.user,model_ionia_maint_repuesto,base.group_user,1,1,1,1
+access_ionia_inv_panel,ionia.inv.panel.user,model_ionia_inv_panel,base.group_user,1,1,1,1

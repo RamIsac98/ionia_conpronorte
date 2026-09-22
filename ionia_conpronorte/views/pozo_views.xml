@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ionia_pozo_view_list" model="ir.ui.view">
+        <field name="name">ionia.pozo.list</field>
+        <field name="model">ionia.pozo</field>
+        <field name="arch" type="xml">
+            <list string="Pozos">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="flota_ids" widget="many2many_tags" string="Equipos trabajando" optional="show"/>
+                <field name="estado"/>
+                <field name="mant_estado" optional="show"/>
+                <field name="contrato_monto" optional="hide"/>
+                <field name="capital_ingreso" string="Ingreso (USD)"/>
+                <field name="margen" string="Margen (USD)" optional="show"/>
+                <field name="margen_pct" string="Rentabilidad %" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ionia_pozo_view_form" model="ir.ui.view">
+        <field name="name">ionia.pozo.form</field>
+        <field name="model">ionia.pozo</field>
+        <field name="arch" type="xml">
+            <form string="Pozo">
+                <sheet>
+                    <div class="oe_title"><h1><field name="name" placeholder="Nombre del pozo"/></h1></div>
+                    <group>
+                        <group string="Cliente">
+                            <field name="partner_id"/>
+                            <field name="partner_vat"/>
+                            <field name="partner_phone"/>
+                            <field name="partner_email"/>
+                        </group>
+                        <group string="Estado y contrato">
+                            <field name="estado"/>
+                            <field name="finalizado"/>
+                            <field name="mant_estado"/>
+                            <field name="contrato_ref"/>
+                            <field name="contrato_inicio"/>
+                            <field name="contrato_fin"/>
+                            <field name="contrato_monto"/>
+                        </group>
+                    </group>
+                    <group string="Economía (USD / Bs)">
+                        <group>
+                            <field name="capital_ingreso"/>
+                            <field name="ingreso_bs"/>
+                            <field name="costo_operativo"/>
+                            <field name="costo_mant"/>
+                        </group>
+                        <group>
+                            <field name="costo_total"/>
+                            <field name="costo_bs"/>
+                            <field name="margen"/>
+                            <field name="margen_bs"/>
+                            <field name="margen_pct"/>
+                            <field name="semaforo"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Flota asignada">
+                            <field name="flota_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="model_id"/>
+                                    <field name="license_plate"/>
+                                    <field name="state_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ionia_pozo_view_search" model="ir.ui.view">
+        <field name="name">ionia.pozo.search</field>
+        <field name="model">ionia.pozo</field>
+        <field name="arch" type="xml">
+            <search string="Pozos">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <filter name="f_activo" string="Activos" domain="[('estado','=','activo')]"/>
+                <filter name="f_pausa" string="En pausa" domain="[('estado','=','pausa_mant')]"/>
+                <separator/>
+                <filter name="g_cliente" string="Cliente" context="{'group_by':'partner_id'}"/>
+                <filter name="g_estado" string="Estado" context="{'group_by':'estado'}"/>
+                <searchpanel>
+                    <field name="partner_id" string="Cliente" icon="fa-building" enable_counters="1"/>
+                    <field name="estado" string="Estado" icon="fa-flag" enable_counters="1" select="multi"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="ionia_pozo_view_graph" model="ir.ui.view">
+        <field name="name">ionia.pozo.graph</field>
+        <field name="model">ionia.pozo</field>
+        <field name="arch" type="xml">
+            <graph string="Rentabilidad por pozo" type="bar">
+                <field name="name"/>
+                <field name="capital_ingreso" type="measure"/>
+                <field name="costo_operativo" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_ionia_pozo" model="ir.actions.act_window">
+        <field name="name">Pozos</field>
+        <field name="res_model">ionia.pozo</field>
+        <field name="view_mode">list,form,graph</field>
+        <field name="search_view_id" ref="ionia_pozo_view_search"/>
+    </record>
+
+    <record id="action_ionia_pozo_rentabilidad" model="ir.actions.act_window">
+        <field name="name">Rentabilidad por pozo</field>
+        <field name="res_model">ionia.pozo</field>
+        <field name="view_mode">list,graph,form</field>
+        <field name="search_view_id" ref="ionia_pozo_view_search"/>
+    </record>
+</odoo>

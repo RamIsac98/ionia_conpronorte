@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- App Gestión -->
+    <menuitem id="menu_ionia_gestion_root" name="Gestión" sequence="1"
+              web_icon="ionia_conpronorte,static/description/gestion_icon.png"/>
+    <menuitem id="menu_ionia_gestion_act" name="Actividad de flota" sequence="10"
+              parent="menu_ionia_gestion_root" action="action_ionia_gestion"/>
+
+    <!-- App Pozo -->
+    <menuitem id="menu_ionia_pozo_root" name="Pozo" sequence="2"
+              web_icon="ionia_conpronorte,static/description/pozo_icon.png"/>
+    <menuitem id="menu_ionia_pozos" name="Pozos" sequence="10"
+              parent="menu_ionia_pozo_root" action="action_ionia_pozo"/>
+    <menuitem id="menu_ionia_tablero" name="Tablero económico" sequence="20"
+              parent="menu_ionia_pozo_root" action="action_ionia_inv_panel"/>
+    <menuitem id="menu_ionia_rentab" name="Rentabilidad por pozo" sequence="30"
+              parent="menu_ionia_pozo_root" action="action_ionia_pozo_rentabilidad"/>
+    <menuitem id="menu_ionia_ordenes" name="Órdenes de mantenimiento" sequence="40"
+              parent="menu_ionia_pozo_root" action="action_ionia_maint_orden"/>
+</odoo>

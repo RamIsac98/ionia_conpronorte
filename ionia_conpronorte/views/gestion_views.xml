@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ionia_gestion_view_list" model="ir.ui.view">
+        <field name="name">ionia.gestion.list</field>
+        <field name="model">ionia.gestion</field>
+        <field name="arch" type="xml">
+            <list string="Gestión de flota en pozos">
+                <field name="fecha"/>
+                <field name="flota_id"/>
+                <field name="pozo_id"/>
+                <field name="tipo_solicitud" optional="show"/>
+                <field name="estado"/>
+                <field name="es_falla" string="Falla" optional="show"/>
+                <field name="falla_desc" string="Reporte de falla" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ionia_gestion_view_form" model="ir.ui.view">
+        <field name="name">ionia.gestion.form</field>
+        <field name="model">ionia.gestion</field>
+        <field name="arch" type="xml">
+            <form string="Actividad de gestión">
+                <sheet>
+                    <div class="oe_title"><h1><field name="name" readonly="1"/></h1></div>
+                    <group>
+                        <group string="Actividad">
+                            <field name="flota_id"/>
+                            <field name="pozo_id"/>
+                            <field name="fecha"/>
+                            <field name="tipo_solicitud"/>
+                            <field name="estado"/>
+                        </group>
+                        <group string="Reporte de falla">
+                            <field name="es_falla"/>
+                            <field name="falla_desc" placeholder="Describe la falla..."/>
+                        </group>
+                    </group>
+                    <field name="notas" placeholder="Observaciones..."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ionia_gestion_view_search" model="ir.ui.view">
+        <field name="name">ionia.gestion.search</field>
+        <field name="model">ionia.gestion</field>
+        <field name="arch" type="xml">
+            <search string="Gestión">
+                <field name="flota_id"/>
+                <field name="pozo_id"/>
+                <filter name="f_falla" string="Con reporte de falla" domain="[('es_falla','=',True)]"/>
+                <separator/>
+                <filter name="g_tipo" string="Tipo de solicitud" context="{'group_by':'tipo_solicitud'}"/>
+                <filter name="g_pozo" string="Pozo" context="{'group_by':'pozo_id'}"/>
+                <filter name="g_estado" string="Estado" context="{'group_by':'estado'}"/>
+                <searchpanel>
+                    <field name="tipo_solicitud" string="Tipo de solicitud" icon="fa-tags" enable_counters="1" select="multi"/>
+                    <field name="pozo_id" string="Pozo" icon="fa-tint" enable_counters="1"/>
+                    <field name="estado" string="Estado" icon="fa-truck" enable_counters="1" select="multi"/>
+                    <field name="flota_id" string="Equipo" icon="fa-wrench" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ionia_gestion" model="ir.actions.act_window">
+        <field name="name">Actividad de flota</field>
+        <field name="res_model">ionia.gestion</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="ionia_gestion_view_search"/>
+    </record>
+</odoo>
